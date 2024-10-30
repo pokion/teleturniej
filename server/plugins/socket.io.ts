@@ -20,9 +20,7 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     },
     websocket: {
       open(peer) {
-        // @ts-expect-error private method and property
         engine.prepare(peer._internal.nodeReq);
-        // @ts-expect-error private method and property
         engine.onWebSocket(peer._internal.nodeReq, peer._internal.nodeReq.socket, peer.websocket);
       }
     }

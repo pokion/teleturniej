@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   nitro: {
     experimental: {
-      websocket: true
+      websocket: true,
+      database: true
     },
   },
   modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt','radix-vue/nuxt'],
