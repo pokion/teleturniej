@@ -1,5 +1,6 @@
 export default defineNitroPlugin(async (nitroApp: NitroApp) => {
   const db = useDatabase();
+  await db.sql`DROP TABLE IF EXISTS TournamentPlayer`;
   await db.sql`DROP TABLE IF EXISTS player`;
   await db.sql`CREATE TABLE IF NOT EXISTS Player (ID INTEGER PRIMARY KEY,
                                                   Name varchar(40) NOT NULL UNIQUE,
