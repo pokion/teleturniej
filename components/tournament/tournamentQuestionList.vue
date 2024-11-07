@@ -10,10 +10,10 @@
 			<CardDescription>Change questions index</CardDescription>
 		</CardHeader>
 		<CardContent>
-
-			<TournamentContentQuestion />
-			<TournamentContentQuestion />
-			<TournamentContentQuestion />
+			<ScrollArea class="h-[650px]"> 
+				<TournamentContentQuestion />
+				<TournamentContentQuestion />
+			</ScrollArea>
 
 		</CardContent>
 	</Card>
