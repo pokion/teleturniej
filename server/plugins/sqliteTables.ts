@@ -22,6 +22,7 @@ export default defineNitroPlugin(async (nitroApp: NitroApp) => {
   await db.sql`CREATE TABLE IF NOT EXISTS Question (ID TEXT PRIMARY KEY,
                                                     Title varchar(100) NOT NULL,
                                                     Type INTEGER NOT NULL,
+                                                    IndexNumber INTEGER,
                                                     MultimediaPath varchar(200),
                                                     FOREIGN KEY(Type) REFERENCES QuestionType(ID))`;  
   await db.sql`CREATE TABLE IF NOT EXISTS TournamentQuestion (ID INTEGER PRIMARY KEY,
