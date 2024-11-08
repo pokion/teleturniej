@@ -1,11 +1,8 @@
 <template>
 	<Card>
 		<CardHeader>
-			<CardTitle  class="flex justify-between">
+			<CardTitle>
 				Question
-				<Button variant="outline" size="icon">
-					<Icon name="icon-park-outline:refresh" />
-				</Button>
 			</CardTitle>
 			<CardDescription>Create a question</CardDescription>
 		</CardHeader>
