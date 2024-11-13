@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     'radix-vue/nuxt',
     '@nuxt/icon',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    'nuxt-file-storage'
   ],
   tailwindcss: {
     cssPath: ['~/assets/css/tailwind.css', { injectPosition: "first" }],
@@ -27,5 +28,8 @@ export default defineNuxtConfig({
   shadcn: {
     prefix: '',
     componentDir: './components/ui'
+  },
+  fileStorage: {
+    mount: process.cwd()
   }
 })

@@ -1,26 +1,29 @@
 <script setup lang="ts">
+	const emit = defineEmits(['tournamentChange'])
 	let { data } = await useFetch('/api/tournament')
-	let dataSend = {
+	let dataSend = ref({
 		name: ''
-	}
-	let dataLoading = false;
+	})
+	let dataLoading = ref(false);
 
 	async function handleAddTournament(){
-		dataLoading = true;
-		console.log(dataLoading)
+		dataLoading.value = true;
 		const res = await $fetch('/api/tournament', {
 			method: 'POST',
-			body: dataSend
+			body: dataSend.value
 		});
 		refreshData();
-		dataSend.name = ''
+		dataSend.value.name = ''
 	}
 
 	async function refreshData(){
 		data = await $fetch('/api/tournament');
-		//dataLoading = false;
+		dataLoading.value = false;
 	}
 
+	function tournamentSelected(value: string){
+		emit('tournamentChange', value)
+	}
 </script>
 
 <template>
@@ -37,13 +40,13 @@
 		</CardHeader>
 		<CardContent>
 
-			<Select class="w-full">
+			<Select class="w-full" @update:modelValue="tournamentSelected">
 				<SelectTrigger >
 					<SelectValue placeholder="Select a tournament" />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
-						<SelectItem v-for="tournament in data.rows" :value="tournament.ID">
+						<SelectItem v-for="tournament in data.rows" :value="tournament.ID.toString()">
 							{{tournament.Name}}
 						</SelectItem>
 					</SelectGroup>

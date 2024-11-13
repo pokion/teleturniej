@@ -1,9 +1,12 @@
 export default defineNitroPlugin(async (nitroApp: NitroApp) => {
   const db = useDatabase();
   /*await db.sql`DROP TABLE IF EXISTS TournamentPlayer`;
-  await db.sql`DROP TABLE IF EXISTS player`;
-  await db.sql`DROP TABLE IF EXISTS Answer`;*/
-  await db.sql`DROP TABLE IF EXISTS Tournament`
+  await db.sql`DROP TABLE IF EXISTS player`;*/
+  // await db.sql`DROP TABLE IF EXISTS TournamentQuestion`;
+  // await db.sql`DROP TABLE IF EXISTS QuestionAnswer`
+  // await db.sql`DROP TABLE IF EXISTS Answer`;
+  // await db.sql`DROP TABLE IF EXISTS Tournament`
+  // await db.sql`DROP TABLE IF EXISTS Question`
   await db.sql`CREATE TABLE IF NOT EXISTS Player (ID INTEGER PRIMARY KEY,
                                                   Name varchar(40) NOT NULL UNIQUE,
                                                   Image MEDIUMBLOB)`;
@@ -16,11 +19,11 @@ export default defineNitroPlugin(async (nitroApp: NitroApp) => {
                                                             FOREIGN KEY(PlayerID) REFERENCES Player(ID),
                                                             FOREIGN KEY(TournamentID) REFERENCES Tournament(ID))`; 
   await db.sql`CREATE TABLE IF NOT EXISTS QuestionType (ID INTEGER PRIMARY KEY,
-                                                        Name varchar(100) NOT NULL)`;  
-  await db.sql`CREATE TABLE IF NOT EXISTS Answer (ID TEXT PRIMARY KEY,
+                                                        Name varchar(100) NOT NULL)`;                                    
+  await db.sql`CREATE TABLE IF NOT EXISTS Answer (ID varchar(255) PRIMARY KEY,
                                                   Title varchar(100) NOT NULL,
                                                   IsAnswerCorrect BOOL)`; 
-  await db.sql`CREATE TABLE IF NOT EXISTS Question (ID TEXT PRIMARY KEY,
+  await db.sql`CREATE TABLE IF NOT EXISTS Question (ID varchar(255) PRIMARY KEY,
                                                     Title varchar(100) NOT NULL,
                                                     Type INTEGER NOT NULL,
                                                     IndexNumber INTEGER,
@@ -32,8 +35,8 @@ export default defineNitroPlugin(async (nitroApp: NitroApp) => {
                                                               FOREIGN KEY(QuestionID) REFERENCES Question(ID),
                                                               FOREIGN KEY(TournamentID) REFERENCES Tournament(ID))`;
   await db.sql`CREATE TABLE IF NOT EXISTS QuestionAnswer (ID INTEGER PRIMARY KEY,
-                                                          AnswerID TEXT NOT NULL,
-                                                          QuestionID TEXT NOT NULL,
+                                                          AnswerID varchar(255) NOT NULL,
+                                                          QuestionID varchar(255) NOT NULL,
                                                           FOREIGN KEY(AnswerID) REFERENCES Answer(ID),
                                                           FOREIGN KEY(QuestionID) REFERENCES Question(ID))`; 
   await db.sql`CREATE TABLE IF NOT EXISTS Press (ID INTEGER PRIMARY KEY,

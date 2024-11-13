@@ -1,19 +1,21 @@
 export default defineEventHandler(async (event) => {
 	try{
-		const {title, type, multimediaPath, tournamentID} = await readBody(event);
-		const db = useDatabase();
-		const id = uid();
-		const result = await db.sql`INSERT INTO Question (ID, Title, Type, MultideiaPath) 
-												VALUES (${id},${title},${type},${multimediaPath})`;
-		let resultTournamentQuestion;
-		if(result.success){
-			resultTournamentQuestion = await db.sql`INSERT INTO QuestionAnswer (QuestionID, TournamentID) 
-															VALUES (${id}, ${tournamentID})`;
-		}else{
-			return result;
+		const {title, type, answers, file, tournamentID} = await readBody<{
+			title: string
+			type: number
+			answers: Answer[]
+			file?: ServerFile
+			tournamentID: string
+		}>(event);
+		let fileName;
+		if(file){
+			fileName = await storeFileLocally(file, 8, '/questionsFile');
 		}
-
-		return resultTournamentQuestion
+		let questionID = await addQuestion({title, type, fileName}, tournamentID);
+		if(questionID == null) return false;
+		await addAnswers(questionID, answers)
+		await addQuestionTournament(questionID, tournamentID);
+		return true
 	}catch(error){
 		console.error(error);
     	return error
