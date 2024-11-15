@@ -3,8 +3,23 @@
 		tournamentId?: string;
 		imageSrc?: string;
 		title: string;
+		indexNumber?: number;
 		answers?: Answer[];
+		id?: string
+		lastItem: boolean
 	}>();
+	const emit = defineEmits(['indexUp','deleteQuestion'])
+	function emitIndex(val){
+		let newIndex = props.indexNumber + val;
+		emit('indexUp', {
+			indexVal: newIndex,
+			id: props.id
+		})
+	}
+
+	function deleteQuestion(){
+		emit('deleteQuestion', { questionID: props.id })
+	}
 </script>
 <template>
 	<div class="grid grid-cols-5 gap-4 my-6 border-2 rounded-2xl">
@@ -25,11 +40,11 @@
 		<div class="row-start-1 col-start-5 col-span-1 row-span-2 flex">
 			<div class="self-center grid grid-cols-2 gap-4">
 				<div class="cols-start-1 col-span-1">
-					<Button variant="outline" size="icon" class="mb-2.5">
+					<Button @click="emitIndex(-1)" :disabled="indexNumber == 1" variant="outline" size="icon" class="mb-2.5">
 						<Icon name="icon-park-outline:up-one" class="text-2xl" />
 					</Button>
 					<br />
-					<Button variant="outline" size="icon" class="mt-2.5">  
+					<Button @click="emitIndex(1)" :disabled="props.lastItem" variant="outline" size="icon" class="mt-2.5">  
 						<Icon name="icon-park-outline:down-one" class="text-2xl" />
 					</Button>
 				</div>
@@ -38,7 +53,7 @@
 						<Icon name="icon-park-outline:edit" class="text-2xl" />
 					</Button>
 					<br />
-					<Button variant="destructive" size="icon" class="mt-2.5">  
+					<Button @click="deleteQuestion" variant="destructive" size="icon" class="mt-2.5">  
 						<Icon name="icon-park-outline:delete-five" class="text-2xl" />
 					</Button>
 				</div>

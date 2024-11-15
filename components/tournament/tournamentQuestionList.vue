@@ -13,6 +13,28 @@
 		spinnerShow.value = false;
 	}
 
+	async function handleIndexChange(value){
+		spinnerShow.value = true;
+		await $fetch('/api/question/changeIndex',{
+			method: 'POST',
+			body: {
+				questionID: value.id,
+				tournamentID: props.tournamentID,
+				newIndex: value.indexVal
+			}
+		})
+		handleCHangeTournamentId(props.tournamentID)
+	}
+
+	async function handleDelete(value){
+		spinnerShow.value = true;
+		await $fetch('/api/question/delete',{
+			method: 'POST',
+			body: value
+		})
+		handleCHangeTournamentId(props.tournamentID)
+	}
+
 	watch(()=>props.tournamentID, handleCHangeTournamentId)
 	
 	defineExpose({
@@ -26,7 +48,7 @@
 		<CardHeader>
 			<CardTitle class="flex justify-between">
 				Tournament questions
-				<Button variant="outline" size="icon">
+				<Button @click="handleCHangeTournamentId(props.tournamentID)" variant="outline" size="icon">
 					<Icon name="icon-park-outline:refresh" />
 				</Button>
 			</CardTitle>
@@ -34,11 +56,16 @@
 		</CardHeader>
 		<CardContent>
 			<ScrollArea class="h-[650px]"> 
-				<TournamentContentQuestion v-for="question in questionList"
+				<TournamentContentQuestion v-for="(question, index) in questionList"
 					:tournament-id="question.id"
 					:image-src="question.fileName"
 					:title="question.title"
 					:answers="question.answers"
+					:id="question.id"
+					:index-number="question.indexNumber"
+					:last-item="index == questionList?.length - 1"
+					@index-up="handleIndexChange"
+					@delete-question="handleDelete"
 				/>
 			</ScrollArea>
 

@@ -32,7 +32,7 @@
 		<CardHeader>
 			<CardTitle class="flex justify-between">
 				Tournament
-				<Button variant="outline" size="icon">
+				<Button @click="refreshData" variant="outline" size="icon">
 					<Icon name="icon-park-outline:refresh" />
 				</Button>
 			</CardTitle>
