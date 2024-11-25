@@ -1,0 +1,5 @@
+declare interface Player {
+	ID: string;
+    Name: string;
+    Image: string;
+}

@@ -1,7 +1,7 @@
 export default defineNitroPlugin(async (nitroApp: NitroApp) => {
   const db = useDatabase();
-  /*await db.sql`DROP TABLE IF EXISTS TournamentPlayer`;
-  await db.sql`DROP TABLE IF EXISTS player`;*/
+  // await db.sql`DROP TABLE IF EXISTS TournamentPlayer`;
+  // await db.sql`DROP TABLE IF EXISTS player`;
   // await db.sql`DROP TABLE IF EXISTS TournamentQuestion`;
   // await db.sql`DROP TABLE IF EXISTS QuestionAnswer`
   // await db.sql`DROP TABLE IF EXISTS Answer`;
@@ -9,9 +9,10 @@ export default defineNitroPlugin(async (nitroApp: NitroApp) => {
   // await db.sql`DROP TABLE IF EXISTS Question`
   await db.sql`CREATE TABLE IF NOT EXISTS Player (ID INTEGER PRIMARY KEY,
                                                   Name varchar(40) NOT NULL UNIQUE,
-                                                  Image MEDIUMBLOB)`;
+                                                  Image varchar(200))`;
   await db.sql`CREATE TABLE IF NOT EXISTS Tournament (ID INTEGER PRIMARY KEY,
                                                       Date DATE,
+                                                      Active BOOL,
                                                       Name varchar(40) NOT NULL)`;
   await db.sql`CREATE TABLE IF NOT EXISTS TournamentPlayer (ID INTEGER PRIMARY KEY,
                                                             PlayerID INTEGER NOT NULL,

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   compatibilityDate: '2024-04-03',
   nitro: {
     experimental: {
@@ -14,7 +14,13 @@ export default defineNuxtConfig({
     'radix-vue/nuxt',
     '@nuxt/icon',
     '@nuxtjs/color-mode',
-    'nuxt-file-storage'
+    'nuxt-file-storage',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: ['defineStore', 'acceptHMRUpdate']
+      }
+    ],
   ],
   tailwindcss: {
     cssPath: ['~/assets/css/tailwind.css', { injectPosition: "first" }],
@@ -31,5 +37,8 @@ export default defineNuxtConfig({
   },
   fileStorage: {
     mount: process.cwd()
+  },
+  imports: {
+    dirs: ['stores']
   }
 })
